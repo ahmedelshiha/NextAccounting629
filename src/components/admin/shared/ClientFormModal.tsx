@@ -40,7 +40,7 @@ interface ClientFormModalProps {
   onClose: () => void
   onSuccess?: (clientId: string) => void
   mode?: 'create' | 'edit'
-  initialData?: Partial<ClientFormData & { id: string }>
+  initialData?: Partial<ClientFormData & { id: string; name?: string | null }>
   title?: string
   description?: string
 }
