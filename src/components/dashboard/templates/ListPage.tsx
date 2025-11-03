@@ -96,6 +96,10 @@ export default function ListPage<T extends { id?: string | number }>(props: List
   const [selectedIds, setSelectedIds] = useState<Array<string | number>>([])
   const activeFilters = useMemo(() => (filters || []).filter((f) => f.value).map((f) => ({ key: f.key, label: f.label, value: String(f.value) })), [filters])
 
+  // Determine which table component to use
+  // Priority: AdvancedDataTable > VirtualizedDataTable > DataTable
+  const useVirtualizationProp = useVirtualization !== false // Default to true
+
   return (
     <StandardPage
       title={title}
@@ -135,6 +139,20 @@ export default function ListPage<T extends { id?: string | number }>(props: List
           onPageChange={onPageChange}
           emptyMessage={emptyMessage}
           onSelectionChange={setSelectedIds}
+        />
+      ) : useVirtualizationProp ? (
+        <VirtualizedDataTable<T>
+          columns={columns}
+          rows={rows}
+          loading={loading}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          onSort={onSort}
+          actions={actions}
+          selectable={selectable}
+          onSelectionChange={setSelectedIds}
+          useVirtualization={true}
+          virtualizationThreshold={virtualizationThreshold ?? 100}
         />
       ) : (
         <DataTable<T>
