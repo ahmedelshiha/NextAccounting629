@@ -11,6 +11,11 @@ import { createHash } from 'crypto'
 export const runtime = 'nodejs'
 export const revalidate = 30 // ISR: Revalidate every 30 seconds for search results
 
+// Maximum allowed page size (prevent memory abuse)
+const MAX_LIMIT = 250
+const DEFAULT_LIMIT = 50
+const MIN_SEARCH_LENGTH = 2
+
 export interface UserFilterOptions {
   search?: string
   role?: string
@@ -20,7 +25,7 @@ export interface UserFilterOptions {
   experienceYears?: { min?: number; max?: number }
   createdAfter?: string
   createdBefore?: string
-  sortBy?: 'name' | 'email' | 'createdAt' | 'role'
+  sortBy?: 'name' | 'email' | 'createdAt' | 'role' | 'department' | 'tier'
   sortOrder?: 'asc' | 'desc'
   page: number
   limit: number
