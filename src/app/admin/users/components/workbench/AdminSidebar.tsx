@@ -253,9 +253,9 @@ export default function AdminSidebar({
           </CollapsibleTrigger>
 
           <CollapsibleContent className="admin-sidebar-content-inner">
-            <div className="text-sm text-gray-600 p-3 bg-gray-50 rounded">
-              <p className="font-medium mb-2">⏰ Activity feed coming soon</p>
-              <p className="text-xs">Recent user actions and system events will appear here.</p>
+            <div className="text-sm text-gray-600 p-3 bg-gray-100 rounded border border-gray-200">
+              <p className="font-medium mb-2">⏰ Recent Activity</p>
+              <p className="text-xs text-gray-500">Activity feed coming soon - recent user actions and system events will appear here.</p>
             </div>
           </CollapsibleContent>
         </Collapsible>
