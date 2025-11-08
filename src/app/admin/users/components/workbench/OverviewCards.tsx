@@ -28,7 +28,6 @@ export default function OverviewCards() {
       totalUsers: Math.max(120, users.length),
       pendingApprovals: Math.max(15, Math.floor(users.filter(u => u.status === 'INACTIVE').length * scaleFactor)),
       inProgressWorkflows: Math.max(24, Math.floor(users.filter(u => u.status === 'ACTIVE').length * scaleFactor)),
-      dueThisWeek: 0,
       systemHealth: 98.5
     }
 
