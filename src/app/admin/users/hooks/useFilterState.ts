@@ -22,8 +22,8 @@ export interface FilterStats {
 export function useFilterState(users: UserItem[]) {
   const [filters, setFilters] = useState<FilterState>({
     search: '',
-    role: null,
-    status: null
+    roles: [],
+    statuses: []
   })
 
   const handleSearchChange = useCallback((value: string) => {
