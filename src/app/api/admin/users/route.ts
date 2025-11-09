@@ -364,13 +364,16 @@ export const PUT = withTenantContext(async (request: NextRequest) => {
       return respond.notFound('User not found')
     }
 
+    // Hash password before storing in database
+    const hashedPassword = password ? await bcrypt.hash(password, 12) : undefined
+
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         name,
         email,
         role,
-        password
+        ...(hashedPassword ? { password: hashedPassword } : {})
       }
     })
 
