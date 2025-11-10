@@ -272,6 +272,16 @@ export function UserDirectoryFilterBarEnhanced({
           />
         )}
 
+        {/* Advanced Query Builder */}
+        <AdvancedQueryBuilder
+          onApplyQuery={handleApplyAdvancedQuery}
+        />
+
+        {/* Query Template Manager */}
+        <QueryTemplateManager
+          onLoadTemplate={handleLoadTemplate}
+        />
+
         {/* Clear Filters Button */}
         {hasActiveFilters && (
           <Button
