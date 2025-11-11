@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from 'sonner'
 
 export interface IntegrationInfo {
   name: string
