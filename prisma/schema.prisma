@@ -98,6 +98,7 @@ model User {
   bulkOperationResults      BulkOperationResult[]
   bulkOperationHistoryChanges BulkOperationHistory[] @relation("BulkOperationHistoryChangedBy")
   reports                   Report[]
+  exportSchedules           ExportSchedule[]
 
   @@unique([tenantId, email])
   @@index([tenantId, role])
@@ -321,6 +322,7 @@ model Tenant {
   filterPresets         FilterPreset[]
   reports               Report[]
   userManagementSettings UserManagementSettings?
+  exportSchedules    ExportSchedule[]
 
   @@index([status])
 }

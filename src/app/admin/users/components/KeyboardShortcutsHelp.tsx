@@ -17,11 +17,9 @@ export const KeyboardShortcutsHelp = React.memo(function KeyboardShortcutsHelp({
   isOpen,
   onClose
 }: KeyboardShortcutsHelpProps) {
-  if (!isOpen) return null
-
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/.test(navigator.platform)
 
-  // Close on escape key
+  // Close on escape key (must be before early return to comply with Rules of Hooks)
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -31,6 +29,8 @@ export const KeyboardShortcutsHelp = React.memo(function KeyboardShortcutsHelp({
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
+
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
