@@ -212,7 +212,7 @@ async function DELETE(
         documentId: document.id,
         documentName: document.name,
         documentSize: document.size,
-        deletedBy: session.user.id,
+        deletedBy: userId,
       },
     }).catch(() => {})
 

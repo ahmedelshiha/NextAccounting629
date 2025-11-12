@@ -61,7 +61,7 @@ export const GET = withTenantContext(async (
           },
         }).catch(() => {})
 
-        return new NextResponse(signedDocumentData, {
+        return new NextResponse(signedDocumentData as any, {
           headers: {
             'Content-Type': 'application/pdf',
             'Content-Disposition': `attachment; filename="${document.name || 'signed-document.pdf'}"`,

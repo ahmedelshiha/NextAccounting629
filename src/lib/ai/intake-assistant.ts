@@ -44,7 +44,7 @@ export const IntakeResponseSchema = z.object({
   })).optional(),
   recommendedProducts: z.array(z.string()).optional(),
   estimatedCompliance: z.object({
-    level: z.nativeEnum(ComplianceLevel),
+    level: z.enum(['BASIC','STANDARD','ADVANCED','ENTERPRISE']),
     obligations: z.array(z.string()),
     estimatedCost: z.number(),
     estimatedEffort: z.string(),
