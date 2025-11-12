@@ -7,10 +7,19 @@ import { authOptions } from '@/lib/auth'
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup'
 import { getEffectiveOrgSettingsFromHeaders } from '@/lib/org-settings'
 import { SettingsProvider } from '@/components/providers/SettingsProvider'
-import { locales, type Locale } from '@/lib/i18n'
+import { locales, type Locale, localeConfig } from '@/lib/i18n'
 import '@/styles/dark-mode.css'
 
 const inter = Inter({ subsets: ['latin'] })
+
+// Import fonts that support Arabic and other scripts
+import { Noto_Sans_Arabic } from 'next/font/google'
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-sans-arabic',
+})
 
 export const metadata = {
   title: 'Professional Accounting Services | Accounting Firm',
