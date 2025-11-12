@@ -210,6 +210,10 @@ export class EntityService {
             periods: true,
           },
         },
+        auditLogs: {
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        },
       },
       orderBy: filters?.orderBy || { createdAt: "desc" },
       skip: filters?.skip,
@@ -252,7 +256,7 @@ export class EntityService {
             legalForm: input.legalForm,
             status: input.status,
             activityCode: input.activityCode,
-            metadata: input.metadata,
+            metadata: (input.metadata || {}) as Prisma.InputJsonValue,
             updatedBy: userId,
           },
         });
@@ -264,7 +268,7 @@ export class EntityService {
               entityId,
               userId,
               action: "UPDATE",
-              changes,
+              changes: (changes as any) as Prisma.InputJsonValue,
             },
           });
         }
@@ -304,7 +308,7 @@ export class EntityService {
             expiresAt: input.expiresAt,
             economicZoneId: input.economicZoneId,
             status: input.status || "ACTIVE",
-            metadata: input.metadata || {},
+            metadata: (input.metadata || {}) as Prisma.InputJsonValue,
           },
         });
 
@@ -314,7 +318,7 @@ export class EntityService {
             entityId,
             userId,
             action: "ADD_LICENSE",
-            changes: input,
+            changes: (input as any) as Prisma.InputJsonValue,
           },
         });
       });
@@ -339,7 +343,7 @@ export class EntityService {
     const entity = await this.getEntity(tenantId, entityId);
 
     // Validate registration value format
-    const isValid = validateIdentifier(type, value, entity.country);
+    const isValid = validateIdentifier(type as any, value, entity.country);
     if (!isValid) {
       throw new Error(`Invalid ${type} format for country ${entity.country}`);
     }
