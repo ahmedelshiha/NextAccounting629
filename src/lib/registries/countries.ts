@@ -355,7 +355,7 @@ const uaeTaxObligations: TaxObligation[] = [
     nameAr: 'إقرار ضريبة الشركات',
     frequency: 'ANNUALLY',
     daysAfterPeriodEnd: 180,
-    corporateTaxRate: 0.09,
+    metadata: { rate: 0.09 },
   },
 ]
 
@@ -379,7 +379,7 @@ const ksaTaxObligations: TaxObligation[] = [
     nameAr: 'إقرار ودفع الزكاة',
     frequency: 'ANNUALLY',
     daysAfterPeriodEnd: 90,
-    zakatRate: 0.025,
+    metadata: { rate: 0.025 },
   },
   {
     id: 'sa-wht',
@@ -389,7 +389,7 @@ const ksaTaxObligations: TaxObligation[] = [
     nameAr: 'تقرير الضريبة المستقطعة',
     frequency: 'MONTHLY',
     daysAfterPeriodEnd: 25,
-    withholdingTaxRate: 0.05,
+    metadata: { rate: 0.05 },
   },
   {
     id: 'sa-einvoice',
