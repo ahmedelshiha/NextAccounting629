@@ -279,6 +279,36 @@ Mobile and Desktop dashboards deliver identical functions with layout-specific a
 
 ### Desktop Parity for Sections
 - Left sidebar replaces bottom navigation; persistent search in header; keyboard shortcuts; multi-select/bulk actions for Documents, Invoicing, Approvals, and Services.
+
+### Phase 2.4 — Profile & Account Center (Mobile and Desktop)
+- Observed mobile UI
+  - Avatar, full name, email; grouped sections: Account (Wallet, Cart, Documents, Rating, Logout) and More (About, Report Bugs, Support); App version at footer; back and overflow icons.
+- Core features
+  - Profile overview: name, email, phone, roles; edit with validations; selfie/avatar upload with cropping; audit trail of changes.
+  - Wallet: list payment methods, default card, firm invoices, receipts; add/remove methods; show credits/balance if applicable.
+  - Cart: pending service purchases/quotes; taxes, promo codes; checkout to Payment Gateway.
+  - Documents: shortcut to user’s personal folder and entity-scoped docs; recent items and starred.
+  - Rating & Feedback: NPS/CSAT with free-text; follow-up contact permission; optional store rating deep link.
+  - Logout: one-tap logout + “Log out of all devices” (session revoke).
+  - About: app info, licenses, changelog; Terms/Privacy links.
+  - Report Bugs: create support ticket with logs/metadata (device, version); attach screenshots; consent checkbox.
+  - Support: open live chat, phone/email options, ticket history; SLA and priority tagging.
+  - Preferences: language (EN/AR with RTL), theme (light/dark/system), time zone, notification channels (email/SMS/WhatsApp/push), data-export request.
+  - Security: 2FA management (TOTP/SMS), biometric login toggle (mobile), session/device list with revoke, IP allowlist if org-enabled.
+- Desktop parity
+  - Dedicated Settings app with left nav: Profile, Security, Wallet, Cart, Documents, Notifications, Support, About.
+  - Right pane shows forms/cards; breadcrumbs; keyboard navigable; modals for destructive actions.
+- Data model & APIs
+  - users(id, name, email, phone, avatar_url, locale, timezone), user_preferences(theme, notifications, language), sessions(id, device, ip, last_seen), support_tickets(id, type[bug|question], severity, status), feedback(id, score, comment, channel), payment_methods, invoices, cart_items.
+  - GET/PUT /api/users/me; PUT /api/users/me/preferences; GET/DELETE /api/sessions; POST /api/support/tickets; POST /api/feedback; payments and invoices via existing billing endpoints.
+- Security & compliance
+  - RLS by user/tenant; encrypt sensitive fields; redact PII in logs; rate-limit support/feedback endpoints; export/delete per GDPR.
+- Telemetry
+  - profile.view, wallet.open, cart.checkout.start/success, documents.quick_open, feedback.submit, bug.report.submit, logout.all_devices, preference.change, security.2fa.enable/disable.
+- Accessibility & UX
+  - Large touch targets on mobile (≥44px); clear labels; focus order logical; error summaries; RTL mirrored layouts.
+- Acceptance criteria
+  - All actions persist and reflect across devices; session revocation effective immediately; AR/EN localized; desktop and mobile achieve feature parity.
 - Tasks
   - Action center with upcoming/overdue filings, renewals, and required evidence.
   - Calendar view per entity/country; ICS export and WhatsApp/SMS/email reminders (opt-in).
