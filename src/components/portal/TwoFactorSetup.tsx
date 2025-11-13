@@ -192,7 +192,7 @@ export function TwoFactorSetup({ userId, onComplete }: TwoFactorSetupProps) {
                   </label>
                   <Input
                     type="text"
-                    maxLength="6"
+                    maxLength={6}
                     placeholder="000000"
                     value={verificationCode}
                     onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ""))}
