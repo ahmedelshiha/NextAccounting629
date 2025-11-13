@@ -14,15 +14,15 @@ const CreateFilingSchema = z.object({
   taxType: z.enum(['VAT', 'CORPORATE_TAX', 'ZAKAT', 'WHT', 'ESR', 'UBO', 'ETA', 'E_RECEIPT']),
   periodStartDate: z.string().datetime(),
   periodEndDate: z.string().datetime(),
-  data: z.record(z.any()),
+  data: z.record(z.string(), z.any()),
 })
 
 const FilterSchema = z.object({
   country: z.string().optional(),
   taxType: z.string().optional(),
   status: z.string().optional(),
-  limit: z.coerce.number().min(1).max(100).default(20).optional(),
-  offset: z.coerce.number().min(0).default(0).optional(),
+  limit: z.coerce.number().min(1).max(100).default(20),
+  offset: z.coerce.number().min(0).default(0),
 })
 
 export const GET = withTenantContext(async (request: NextRequest) => {
@@ -140,46 +140,46 @@ export const POST = withTenantContext(async (request: NextRequest) => {
       if (validated.country === 'AE') {
         if (validated.taxType === 'VAT') {
           const workflow = new UAEVATWorkflow()
-          const validation = workflow.validateFiling(validated.data)
+          const validation = workflow.validateFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateVAT(validated.data)
+          calculations = workflow.calculateVAT(validated.data as any)
         } else if (validated.taxType === 'ESR') {
           const workflow = new UAEESRWorkflow()
-          const validation = workflow.validateESRFiling(validated.data)
+          const validation = workflow.validateESRFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
           calculations = { taxAmount: 0 } // ESR doesn't have tax amount
         } else if (validated.taxType === 'CORPORATE_TAX') {
           const workflow = new UAECorporateTaxWorkflow()
-          const validation = workflow.validateCorporateTaxFiling(validated.data)
+          const validation = workflow.validateCorporateTaxFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateCorporateTax(validated.data)
+          calculations = workflow.calculateCorporateTax(validated.data as any)
         }
       } else if (validated.country === 'SA') {
         if (validated.taxType === 'VAT') {
           const workflow = new KSAVATWorkflow()
-          const validation = workflow.validateFiling(validated.data)
+          const validation = workflow.validateFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateVAT(validated.data)
+          calculations = workflow.calculateVAT(validated.data as any)
         } else if (validated.taxType === 'ZAKAT') {
           const workflow = new KSAZakatWorkflow()
-          const validation = workflow.validateZakatFiling(validated.data)
+          const validation = workflow.validateZakatFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateZakat(validated.data)
+          calculations = workflow.calculateZakat(validated.data as any)
         } else if (validated.taxType === 'WHT') {
           const workflow = new KSAWHTWorkflow()
-          const validation = workflow.validateWHTFiling(validated.data)
+          const validation = workflow.validateWHTFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateWHT(validated.data)
+          calculations = workflow.calculateWHT(validated.data as any)
         }
       } else if (validated.country === 'EG') {
         if (validated.taxType === 'VAT') {
           const workflow = new EgyptVATWorkflow()
-          const validation = workflow.validateVATFiling(validated.data)
+          const validation = workflow.validateVATFiling(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
-          calculations = workflow.calculateVAT(validated.data)
+          calculations = workflow.calculateVAT(validated.data as any)
         } else if (validated.taxType === 'ETA') {
           const workflow = new EgyptETAWorkflow()
-          const validation = workflow.validateETAInvoice(validated.data)
+          const validation = workflow.validateETAInvoice(validated.data as any)
           if (!validation.isValid) validationErrors = validation.errors
           calculations = { taxAmount: 0 }
         }

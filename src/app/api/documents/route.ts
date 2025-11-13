@@ -6,14 +6,14 @@ import { logAuditSafe } from '@/lib/observability-helpers'
 import { z } from 'zod'
 
 const DocumentFilterSchema = z.object({
-  limit: z.coerce.number().min(1).max(100).default(20).optional(),
-  offset: z.coerce.number().min(0).default(0).optional(),
+  limit: z.coerce.number().min(1).max(100).default(20),
+  offset: z.coerce.number().min(0).default(0),
   search: z.string().optional(),
   category: z.string().optional(),
   startDate: z.string().datetime().optional(),
   endDate: z.string().datetime().optional(),
-  sortBy: z.enum(['uploadedAt', 'name', 'size']).default('uploadedAt').optional(),
-  sortOrder: z.enum(['asc', 'desc']).default('desc').optional(),
+  sortBy: z.enum(['uploadedAt', 'name', 'size']).default('uploadedAt'),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
   avStatus: z.string().optional(),
 })
 

@@ -131,6 +131,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Screen reader users cannot understand the content or purpose of images',
     remediation: 'Add descriptive alt text to all images using the alt attribute',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'low-contrast',
@@ -142,6 +143,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Users with low vision cannot read text with poor contrast',
     remediation: 'Ensure text contrast ratio is at least 4.5:1 for normal text or 3:1 for large text',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'keyboard-navigation',
@@ -153,6 +155,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Users who cannot use a mouse cannot access or navigate the content',
     remediation: 'Ensure all interactive elements can be accessed and operated with keyboard alone',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'missing-focus-indicator',
@@ -164,6 +167,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Keyboard users cannot easily determine which element has focus',
     remediation: 'Ensure focused elements have a visible outline or other focus indicator',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'missing-form-labels',
@@ -175,6 +179,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Screen reader users cannot understand what information is required',
     remediation: 'Associate all form inputs with labels using the <label> element',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'missing-page-language',
@@ -186,6 +191,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Screen readers may use incorrect pronunciation',
     remediation: 'Add lang attribute to html element',
     detectedAt: new Date(),
+    resolved: false,
   },
   {
     id: 'missing-heading-structure',
@@ -197,6 +203,7 @@ const COMMON_ISSUES: AccessibilityIssue[] = [
     impact: 'Screen reader users cannot navigate page structure effectively',
     remediation: 'Use heading elements (h1-h6) in proper sequential order',
     detectedAt: new Date(),
+    resolved: false,
   },
 ]
 
@@ -335,6 +342,7 @@ export function checkRTLAccessibility(
       impact: 'Screen readers may not correctly announce text direction',
       remediation: 'Add dir="rtl" to html element for Arabic/Hebrew/Urdu content',
       detectedAt: new Date(),
+      resolved: false,
     })
   }
 
@@ -350,6 +358,7 @@ export function checkRTLAccessibility(
       impact: 'May cause unexpected behavior in screen readers',
       remediation: 'Use CSS text-align and direction properties instead of Unicode marks',
       detectedAt: new Date(),
+      resolved: false,
     })
   }
 
