@@ -91,7 +91,8 @@ export function calculateCorporateTaxObligation(entity: Entity, turnover: number
  * VAT Registration Obligation
  */
 export function isVATRegistrationRequired(entity: Entity, annualTurnover: number): boolean {
-  const threshold = VAT_THRESHOLDS[entity.country];
+  const country = entity.country as CountryCode;
+  const threshold = VAT_THRESHOLDS[country];
   return annualTurnover > threshold;
 }
 
