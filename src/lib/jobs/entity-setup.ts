@@ -167,7 +167,7 @@ export async function verifyEntityRegistrations(
       try {
         // Validate identifier format based on country
         const country = getCountry(entity.country as CountryCode);
-        const validator = country?.validators[registration.type];
+        const validator = country?.validators.find(v => v.type === registration.type);
 
         if (validator && validator.validate(registration.value)) {
           // Mark as verified in database
