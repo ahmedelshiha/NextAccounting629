@@ -13,12 +13,12 @@ const LinkDocumentSchema = z.object({
 export const GET = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -27,7 +27,7 @@ export const GET = withTenantContext(
 
       // Fetch all links for this document
       const links = await prisma.documentLink.findMany({
-        where: { attachmentId: id, tenantId },
+        where: { attachmentId: id, tenantId: tenantId! },
         orderBy: { linkedAt: 'desc' },
       })
 
@@ -61,7 +61,7 @@ export const GET = withTenantContext(
 export const POST = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
       const body = await request.json()
 
@@ -70,7 +70,7 @@ export const POST = withTenantContext(
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -102,7 +102,7 @@ export const POST = withTenantContext(
           linkedToType: validated.linkedToType,
           linkedToId: validated.linkedToId,
           linkedBy: userId,
-          tenantId,
+          tenantId: tenantId!,
         },
       })
 
@@ -152,7 +152,7 @@ export const POST = withTenantContext(
 export const DELETE = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
       const { linkId } = await request.json()
 
@@ -162,7 +162,7 @@ export const DELETE = withTenantContext(
 
       // Verify document exists
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -171,7 +171,7 @@ export const DELETE = withTenantContext(
 
       // Verify link exists and belongs to this document
       const link = await prisma.documentLink.findFirst({
-        where: { id: linkId, attachmentId: id, tenantId },
+        where: { id: linkId, attachmentId: id, tenantId: tenantId! },
       })
 
       if (!link) {

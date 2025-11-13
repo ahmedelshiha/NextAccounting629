@@ -17,7 +17,7 @@ type AuditFilter = z.infer<typeof AuditFilterSchema>
 export const GET = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
 
       // Parse and validate filters
@@ -26,7 +26,7 @@ export const GET = withTenantContext(
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -83,7 +83,7 @@ export const GET = withTenantContext(
             total,
             limit: filters.limit,
             offset: filters.offset,
-            hasMore: filters.offset + filters.limit < total,
+            hasMore: (filters.offset! + filters.limit!) < total,
           },
         },
         { status: 200 }
@@ -112,7 +112,7 @@ export const GET = withTenantContext(
 export const POST = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
       const body = await request.json()
       const { action, details } = body
@@ -126,7 +126,7 @@ export const POST = withTenantContext(
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -141,7 +141,7 @@ export const POST = withTenantContext(
           details: details || {},
           performedBy: userId,
           performedAt: new Date(),
-          tenantId,
+          tenantId: tenantId as string,
         },
       })
 

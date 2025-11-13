@@ -7,12 +7,12 @@ import { requireTenantContext } from '@/lib/tenant-utils'
 export const GET = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -21,7 +21,7 @@ export const GET = withTenantContext(
 
       // Fetch all versions for this document
       const versions = await prisma.documentVersion.findMany({
-        where: { attachmentId: id, tenantId },
+        where: { attachmentId: id, tenantId: tenantId! },
         include: {
           uploader: {
             select: {
@@ -73,7 +73,7 @@ export const GET = withTenantContext(
 export const POST = withTenantContext(
   async (request: NextRequest, { params }: { params: { id: string } }) => {
     try {
-      const { userId, tenantId } = requireTenantContext()
+      const { userId, tenantId } = requireTenantContext()!
       const { id } = params
       const body = await request.json()
       const { versionNumber, changeDescription } = body
@@ -87,7 +87,7 @@ export const POST = withTenantContext(
 
       // Verify document exists and belongs to tenant
       const document = await prisma.attachment.findFirst({
-        where: { id, tenantId },
+        where: { id, tenantId: tenantId! },
       })
 
       if (!document) {
@@ -107,7 +107,7 @@ export const POST = withTenantContext(
           uploadedAt: new Date(),
           uploaderId: userId,
           changeDescription: changeDescription || undefined,
-          tenantId,
+          tenantId: tenantId as string,
         },
         include: {
           uploader: {
